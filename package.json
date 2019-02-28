@@ -1,0 +1,14 @@
+{
+  "name": "vue-movable-element",
+  "version": "1.0.0",
+  "description": "give HTML element ability to move.",
+  "main": "src/index.js",
+  "repository": "https://github.com/lee88688/vue-movable-element.git",
+  "author": "Jimmie Lee",
+  "license": "MIT",
+  "keywords": [
+    "vue2",
+    "drag",
+    "movable"
+  ]
+}
