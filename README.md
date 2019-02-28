@@ -23,6 +23,8 @@ vue component for giving HTML element ability to move.
 
 ![example](./example.gif)
 
+![example2](./example1.gif)
+
 ## API
 
 ### MovableAnchor
