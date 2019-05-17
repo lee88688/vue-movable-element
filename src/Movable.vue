@@ -54,7 +54,7 @@ export default {
         // ignore mouse middle and right button
         return
       }
-      document.addEventListener('mousemove', this.drag, {passive: false})
+      document.addEventListener('mousemove', this.drag, { passive: false })
       this.isMove = true
       this.initX = e.pageX - this.$el.offsetLeft
       this.initY = e.pageY - this.$el.offsetTop
@@ -65,7 +65,7 @@ export default {
       if (!this.active || e.button !== 0) {
         // this condition will be exactly the same as dragStart if.
         // if not, this function will call e.stopPropagation() and
-        // this parent element will not revieve event which leads parents failing
+        // this parent element will not receive event which leads parents failing
         // remove event listener.
         return
       }
@@ -80,12 +80,12 @@ export default {
         let y = e.pageY - this.initY
         if (this.bounding) {
           let getBounding = this.$parent.getBounding || this.getBounding
-          let {width, height} = getBounding()
+          let { width, height } = getBounding()
           width -= this.$el.offsetWidth
           height -= this.$el.offsetHeight
           x = x > width ? width : x
           x = x < 0 ? 0 : x
-          y = y > height ? width : y
+          y = y > height ? height : y
           y = y < 0 ? 0 : y
         }
         this.x = x
@@ -98,6 +98,27 @@ export default {
         height: this.$el.parentElement.offsetHeight,
         width: this.$el.parentElement.offsetWidth
       }
+    },
+    getCurrentInfo () {
+      let getBounding = this.$parent.getBounding || this.getBounding
+      let { width, height } = getBounding()
+      let x = this.x
+      let y = this.y
+      return {
+        x,
+        y,
+        width,
+        height,
+        percentX: x / width * 100,
+        percentY: y / height * 100
+      }
+    },
+    setPercentPosition (percentX, percentY) {
+      // percentX, percentY range from 0 to 1
+      let { width, height } = this.getCurrentInfo()
+      this.x = width * percentX
+      this.y = height * percentY
+      this.$emit('input', [this.x, this.y])
     }
   },
   created () {
@@ -108,8 +129,8 @@ export default {
   mounted () {
     if (!this.$scopedSlots.dragPoint) {
       const el = this.$el
-      el.addEventListener('mousedown', this.dragStart, {passive: false})
-      el.addEventListener('mouseup', this.dragEnd, {passive: false})
+      el.addEventListener('mousedown', this.dragStart, { passive: false })
+      el.addEventListener('mouseup', this.dragEnd, { passive: false })
     }
     this.$el.onselectstart = () => false
     this.$el.ondragstart = () => false

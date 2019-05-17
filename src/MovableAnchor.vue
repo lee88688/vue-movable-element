@@ -7,11 +7,27 @@
 <script>
 export default {
   name: 'MovableAnchor',
+  props: {
+    height: {
+      type: Number,
+      default: 0
+    },
+    width: {
+      type: Number,
+      default: 0
+    }
+  },
   methods: {
     resize (e) {
       this.$emit('resize')
     },
     getBounding () {
+      if (this.height && this.width) {
+        return {
+          height: this.height,
+          width: this.width
+        }
+      }
       return {
         height: this.$el.offsetHeight,
         width: this.$el.offsetWidth
@@ -19,7 +35,7 @@ export default {
     }
   },
   created () {
-    window.addEventListener('resize', this.resize, {passive: true})
+    window.addEventListener('resize', this.resize, { passive: true })
   },
   destroyed () {
     window.removeEventListener('resize', this.resize)
